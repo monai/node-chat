@@ -6,7 +6,7 @@ A simple server-client chat application written for students workshop in Adform.
 * Clone repository `git clone git://github.com/monai/node-chat.git`  
   or download [as zip archive](https://github.com/monai/node-chat/archive/master.zip)
 * Open project directory in terminal (command prompt) window
-* Install dependent packages `npm update`.
+* Install dependent packages `npm update`
 
 # How to run
 
