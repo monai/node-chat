@@ -26,7 +26,7 @@ function onData(data) {
 	dataObj = JSON.parse(data);
 	console.log(dataObj.nick +': '+ dataObj.message);
 	
-	clients.length;
+	i = clients.length;
 	while (i--) {
 		client = clients[i];
 		if (client !== this) {
