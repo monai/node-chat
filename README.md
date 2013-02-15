@@ -12,6 +12,6 @@ A simple server-client chat application written for students workshop in Adform.
 
 * Open project directory in terminal (command prompt) window
 * To start server type `node server.js`
-* To start console client type `node client.js`
+* To start console client type `node client-cli.js`
 * For web interface type `node client-web.js`
   and open `http://localhost:3000/` in web browser
