@@ -21,12 +21,13 @@ function onListening() {
 }
 
 function onData(data) {
-	var client, dataObj;
+	var client, dataObj, i;
 	
 	dataObj = JSON.parse(data);
 	console.log(dataObj.nick +': '+ dataObj.message);
 	
-	for (var i = 0, l = clients.length; i < l; i++) {
+	clients.length;
+	while (i--) {
 		client = clients[i];
 		if (client !== this) {
 			client.write(data);
@@ -36,11 +37,6 @@ function onData(data) {
 
 function onClose() {
 	console.log('client disconnected');
-	
-	for (var i = 0, l = clients.length; i < l; i++) {
-		if (clients[i] === this) {
-			clients.splice(i, 1);
-			break;
-		}
-	}
+
+	clients.splice(clients.indexOf(this), 1);
 }

@@ -18,11 +18,12 @@ function createSocket() {
 	socket = new net.Socket();
 	socket.on('connect', onConnect);
 	socket.on('data', onData);
-	socket.on('close', onConnect);
+	socket.on('close', onClose);
 	socket.connect(31337, '127.0.0.1');
 }
 
 function onConnect() {
+	console.log('connected');
 	
 	rl.on('line', function (message) {
 		socket.write(JSON.stringify({
@@ -38,7 +39,8 @@ function onData(data) {
 }
 
 function onClose() {
+	console.log('connection lost')
+	
 	rl.close();
-	console.log('\nconnection lost')
 	process.exit(0);
 }

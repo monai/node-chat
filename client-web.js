@@ -9,13 +9,13 @@ ioSockets = [];
 socket = new net.Socket();
 socket.on('connect', onConnect);
 socket.on('data', onData);
-socket.on('close', onConnect);
+socket.on('close', onClose);
 socket.connect(31337, '127.0.0.1');
 
 function onConnect() {
-	console.log('connected');
-	
 	var server, app;
+	
+	console.log('connected');
 	
 	app = connect();
 	app.use(connect.logger('dev'));
@@ -34,7 +34,8 @@ function onData(data) {
 }
 
 function onClose() {
-	console.log('\nconnection lost')
+	console.log('connection lost')
+	
 	process.exit(0);
 }
 
@@ -49,7 +50,8 @@ function ioOnMessage(data) {
 }
 
 function ioWrite(data) {
-	for (var i = 0, l = ioSockets.length; i < l; i++) {
+	var i = ioSockets.length;
+	while (i--) {
 		ioSockets[i].emit('message', data);
 	}
 }
