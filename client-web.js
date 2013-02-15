@@ -25,15 +25,12 @@ function onConnect() {
 	server.listen(3000);
 	
 	io = io.listen(server);
-	io.on('connection', ioConnection);
+	io.on('connection', ioOnConnection);
 }
 
 function onData(data) {
 	data = JSON.parse(data);
-	
-	for (var i = 0, l = ioSockets.length; i < l; i++) {
-		ioSockets[i].emit('message', data);
-	}
+	ioWrite(data);
 }
 
 function onClose() {
@@ -41,11 +38,18 @@ function onClose() {
 	process.exit(0);
 }
 
-function ioConnection(socket) {
+function ioOnConnection(socket) {
 	ioSockets.push(socket);
-	socket.on('message', ioMessage)
+	socket.on('message', ioOnMessage)
 }
 
-function ioMessage(data) {
+function ioOnMessage(data) {
 	socket.write(JSON.stringify(data));
+	ioWrite(data);
+}
+
+function ioWrite(data) {
+	for (var i = 0, l = ioSockets.length; i < l; i++) {
+		ioSockets[i].emit('message', data);
+	}
 }

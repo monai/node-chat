@@ -61,8 +61,6 @@ function onSubmit(event) {
 		message: message
 	});
 	
-	showMessage(nick, message);
-	
 	elements.message.value = '';
 }
 
@@ -73,12 +71,8 @@ function onKeydown(event) {
 }
 
 function onMessage(data) {
-	showMessage(data.nick, data.message);
-}
-
-function showMessage(nick, message) {
 	var elem = document.createElement('div');
-	var html = '<p><strong>'+ nick +':</strong> '+ message +'<p>';
+	var html = '<p><strong>'+ data.nick +':</strong> '+ data.message +'<p>';
 	elem.innerHTML = html;
 	elem = elem.removeChild(elem.firstChild);
 	messages.appendChild(elem);
