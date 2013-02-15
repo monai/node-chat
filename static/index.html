@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+	<title>chat</title>
+	<script src="/socket.io/socket.io.js"></script>
+</head>
+
+<style type="text/css">
+p {
+	margin: 0;
+}
+</style>
+
+<body>
+
+<form id="form" method="POST">
+	
+	<div>
+		<input type="text" name="nick">
+	</div>
+	
+	<div>
+		<textarea name="message" cols="50" rows="5"></textarea>
+	</div>
+	
+	<div>
+		<button type="sumit">Submit</button>
+	</div>
+	
+</form>
+
+<hr>
+
+<div id="messages">
+	
+</div>
+
+<script>
+
+var form = document.getElementById('form');
+var messages = document.getElementById('messages');
+
+form.addEventListener('submit', onSubmit, false);
+form.addEventListener('keydown', onKeydown, false);
+
+
+
+var socket = io.connect();
+socket.on('message', onMessage);
+
+function onSubmit(event) {
+	event.preventDefault();
+	
+	var elements, nick, message;
+	elements = form.elements;
+	nick = elements.nick.value;
+	message = elements.message.value;
+	
+	socket.emit('message', {
+		nick: nick,
+		message: message
+	});
+	
+	showMessage(nick, message);
+	
+	elements.message.value = '';
+}
+
+function onKeydown(event) {
+	if (event.keyCode === 13 && event.ctrlKey) {
+		onSubmit(event);
+	}
+}
+
+function onMessage(data) {
+	showMessage(data.nick, data.message);
+}
+
+function showMessage(nick, message) {
+	var elem = document.createElement('div');
+	var html = '<p><strong>'+ nick +':</strong> '+ message +'<p>';
+	elem.innerHTML = html;
+	elem = elem.removeChild(elem.firstChild);
+	messages.appendChild(elem);
+}
+
+</script>
+
+</body>
+</html>
